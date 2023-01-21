@@ -1,7 +1,5 @@
 import { FormEvent, useState } from "react";
 
-//const synth = window.speechSynthesis;
-
 const App = () => {
 	const [input, setInput] = useState<string>("");
 	const [selectedVoice] = useState<number>(0);
