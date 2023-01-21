@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FormEvent, useState } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+//const synth = window.speechSynthesis;
+
+const App = () => {
+	const [input, setInput] = useState<string>("");
+	const [selectedVoice] = useState<number>(0);
+
+	const speak = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const synth = window.speechSynthesis;
+		let utterance = new SpeechSynthesisUtterance(input);
+		utterance.voice = synth.getVoices()[selectedVoice];
+		synth.speak(utterance);
+	};
+
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInput(e.target.value);
+	};
+
+	return (
+		<form onSubmit={speak}>
+			<input type="text" value={input} onChange={onChange} />
+			<button type="submit">Say Something</button>
+		</form>
+	);
+};
 
 export default App;
